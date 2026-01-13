@@ -19,15 +19,12 @@ const ChessBoardView = ({ moves, currentMove }) => {
         promotion: move.promotion || "q"
       });
     }
-    const newFen = chess.fen();
-
-     console.log("fen:", newFen);
 
     setFen(chess.fen());
   }, [moves, currentMove]);
 
   return (
-    <div style={{ marginTop: "20px" }}>
+   <div className="h-screen basis-[70%] flex items-center justify-center bg-gray-200">
       <SimpleBoard fen={fen} />
     </div>
   );

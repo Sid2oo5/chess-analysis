@@ -2,7 +2,8 @@ import React from "react";
 
 function AnalysisPanel({ analysis, onSelectMove }) {
   return (
-    <div>
+   <div className="w-[30%] flex flex-col p-4 bg-white border-l">
+
       <h3>Move Analysis</h3>
       <ul>
         {analysis.map((a, i) => (

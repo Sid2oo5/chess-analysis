@@ -9,68 +9,46 @@ const SimpleBoard = ({ fen }) => {
   const rows = fen.split(" ")[0].split("/");
 
   return (
-    <div style={boardStyle}>
+    <div className="w-full h-full aspect-square grid grid-cols-8 grid-rows-8 border border-gray-400 bg-white">
       {rows.map((row, rowIndex) => {
-        let squares = [];
         let colIndex = 0;
 
-        for (const c of row) {
+        return row.split("").map((c) => {
           if (isNaN(c)) {
-            squares.push(
+            const square = (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                style={getSquareStyle(rowIndex, colIndex)}
+                className={`flex items-center justify-center text-[42px] select-none
+                  ${(rowIndex + colIndex) % 2 === 0
+                    ? "bg-[#f0d9b5]"
+                    : "bg-[#b58863]"}
+                `}
               >
-                <span style={pieceStyle}>{pieceMap[c]}</span>
+                {pieceMap[c]}
               </div>
             );
             colIndex++;
+            return square;
           } else {
-            for (let i = 0; i < Number(c); i++) {
-              squares.push(
+            return [...Array(Number(c))].map(() => {
+              const square = (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  style={getSquareStyle(rowIndex, colIndex)}
+                  className={`${
+                    (rowIndex + colIndex) % 2 === 0
+                      ? "bg-[#f0d9b5]"
+                      : "bg-[#b58863]"
+                  }`}
                 />
               );
               colIndex++;
-            }
+              return square;
+            });
           }
-        }
-
-        return (
-          <div key={rowIndex} style={{ display: "flex" }}>
-            {squares}
-          </div>
-        );
+        });
       })}
     </div>
   );
-};
-
-/* ---------- STYLES ---------- */
-
-const boardStyle = {
-  width: 320,
-  height: 320,
-  border: "2px solid #333",
-};
-
-const getSquareStyle = (row, col) => {
-  const isLight = (row + col) % 2 === 0;
-  return {
-    width: 40,
-    height: 40,
-    backgroundColor: isLight ? "#f0d9b5" : "#b58863",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "32px",
-  };
-};
-
-const pieceStyle = {
-  lineHeight: 1,
 };
 
 export default SimpleBoard;
